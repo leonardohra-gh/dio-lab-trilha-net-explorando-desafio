@@ -46,7 +46,7 @@ namespace DesafioProjetoHospedagem.Models
 
         public decimal CalcularValorDiaria()
         {
-            if(Suite != null)
+            if(Suite == null)
             {
                 throw new Exception("Não há uma suíte cadastrada.");
             }
