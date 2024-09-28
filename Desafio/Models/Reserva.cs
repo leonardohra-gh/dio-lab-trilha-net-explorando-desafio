@@ -2,6 +2,8 @@ namespace DesafioProjetoHospedagem.Models
 {
     public class Reserva
     {
+        public const string SuiteNaoCadastradaMessage = "Não há uma suíte cadastrada."; 
+        public const string MaisHospedesQueOPermitidoMessage = "Quantidade de hóspedes maior que a capacidade da suíte."; 
         public List<Pessoa> Hospedes { get; set; }
         public Suite Suite { get; set; }
         public int DiasReservados { get; set; }
@@ -17,7 +19,7 @@ namespace DesafioProjetoHospedagem.Models
         {
             if(Suite == null)
             {
-                throw new Exception("Não há uma suíte cadastrada.");
+                throw new Exception(SuiteNaoCadastradaMessage);
             }
             else if (hospedes.Count <= Suite.Capacidade)
             {
@@ -25,7 +27,7 @@ namespace DesafioProjetoHospedagem.Models
             }
             else
             {
-                throw new Exception("Quantidade de hóspedes maior que a capacidade da suíte.");
+                throw new Exception(MaisHospedesQueOPermitidoMessage);
             }
         }
 
@@ -48,7 +50,7 @@ namespace DesafioProjetoHospedagem.Models
         {
             if(Suite == null)
             {
-                throw new Exception("Não há uma suíte cadastrada.");
+                throw new Exception(SuiteNaoCadastradaMessage);
             }
 
             decimal valor = DiasReservados * Suite.ValorDiaria;

@@ -5,6 +5,8 @@ using DesafioProjetoHospedagem.Models;
 [TestClass]
 public class HotelTestes
 {
+
+
     private List<Pessoa> CriarListaHospedes(int quantidade)
     {
         List<Pessoa> hospedes = [];
@@ -19,6 +21,63 @@ public class HotelTestes
     }
 
     [TestMethod]
+    public void CadastrarHospedes_ComSuiteEQuantidadeHospedesValida_DeveAdicionarHospedes()
+    {
+        int quantidadeHospedes = 3;
+        List<Pessoa> hospedes = CriarListaHospedes(quantidadeHospedes);
+        Suite suite = new(tipoSuite: "Premium", capacidade: quantidadeHospedes, valorDiaria: 30);
+
+        Reserva reserva = new();
+        reserva.CadastrarSuite(suite);
+        reserva.CadastrarHospedes(hospedes);
+
+        Assert.AreEqual(expected: hospedes, actual: hospedes);
+    }
+
+    [TestMethod]
+    public void CadastrarHospedes_SemSuite_DeveJogarExceptionSuite()
+    {
+        int quantidadeHospedes = 3;
+        List<Pessoa> hospedes = CriarListaHospedes(quantidadeHospedes);
+
+        Reserva reserva = new();
+
+        try
+        {
+            reserva.CadastrarHospedes(hospedes);
+        }
+        catch(Exception e)
+        {
+            StringAssert.Contains(e.Message, Reserva.SuiteNaoCadastradaMessage);
+            return;
+        }
+
+        Assert.Fail("A exception esperada não foi lançada");
+    }
+
+    [TestMethod]
+    public void CadastrarHospedes_ComSuiteEQuantidadeHospedesAcimaLimite_DeveJogarExceptionQuantidadeHospedes()
+    {
+        int quantidadeHospedes = 3;
+        List<Pessoa> hospedes = CriarListaHospedes(quantidadeHospedes);
+        Suite suite = new(tipoSuite: "Premium", capacidade: quantidadeHospedes-1, valorDiaria: 30);
+        Reserva reserva = new();
+
+        try
+        {
+            reserva.CadastrarSuite(suite);
+            reserva.CadastrarHospedes(hospedes);
+        }
+        catch(Exception e)
+        {
+            StringAssert.Contains(e.Message, Reserva.MaisHospedesQueOPermitidoMessage);
+            return;
+        }
+
+        Assert.Fail("A exception esperada não foi lançada");
+    }
+
+    [TestMethod]
     public void ObterQuantidadeHospedes_ComHospedes_DeveRetornarQuantidade()
     {
         // Preparando
@@ -26,7 +85,7 @@ public class HotelTestes
         List<Pessoa> hospedes = CriarListaHospedes(esperado);
         Suite suite = new(tipoSuite: "Premium", capacidade: esperado, valorDiaria: 30);
 
-        Reserva reserva = new Reserva();
+        Reserva reserva = new();
         reserva.CadastrarSuite(suite);
         reserva.CadastrarHospedes(hospedes);
 
