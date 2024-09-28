@@ -6,7 +6,6 @@ using DesafioProjetoHospedagem.Models;
 public class HotelTestes
 {
 
-
     private List<Pessoa> CriarListaHospedes(int quantidade)
     {
         List<Pessoa> hospedes = [];
@@ -92,5 +91,16 @@ public class HotelTestes
         // Assert
         int quantidadeHospedes = reserva.ObterQuantidadeHospedes();
         Assert.AreEqual(esperado, quantidadeHospedes, 0, "Erro ao obter quantidade de hospedes");
+    }
+
+        [TestMethod]
+    public void ObterQuantidadeHospedes_SemHospedes_DeveRetornarQuantidade()
+    {
+        // Preparando
+        Reserva reserva = new();
+
+        // Assert
+        int quantidadeHospedes = reserva.ObterQuantidadeHospedes();
+        Assert.AreEqual(expected: 0, quantidadeHospedes, 0, "Erro ao obter quantidade de hospedes");
     }
 }
