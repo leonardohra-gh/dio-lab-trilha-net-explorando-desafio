@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioProjetoHospedagem", "Desafio/DesafioProjetoHospedagem.csproj", "{E4B38F18-6B74-4342-83BC-1762DC9F127A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioProjetoHospedagem", "Desafio\DesafioProjetoHospedagem.csproj", "{E4B38F18-6B74-4342-83BC-1762DC9F127A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestesHotel", "TestesHotel\TestesHotel.csproj", "{B1A9786B-777F-4334-B1F9-807D0D1D57F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{E4B38F18-6B74-4342-83BC-1762DC9F127A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4B38F18-6B74-4342-83BC-1762DC9F127A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E4B38F18-6B74-4342-83BC-1762DC9F127A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1A9786B-777F-4334-B1F9-807D0D1D57F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1A9786B-777F-4334-B1F9-807D0D1D57F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1A9786B-777F-4334-B1F9-807D0D1D57F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1A9786B-777F-4334-B1F9-807D0D1D57F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
