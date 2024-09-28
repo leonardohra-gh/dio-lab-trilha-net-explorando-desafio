@@ -6,7 +6,7 @@ using DesafioProjetoHospedagem.Models;
 public class HotelTestes
 {
 
-    private List<Pessoa> CriarListaHospedes(int quantidade)
+    private static List<Pessoa> CriarListaHospedes(int quantidade)
     {
         List<Pessoa> hospedes = [];
 
@@ -30,7 +30,7 @@ public class HotelTestes
         reserva.CadastrarSuite(suite);
         reserva.CadastrarHospedes(hospedes);
 
-        Assert.AreEqual(expected: hospedes, actual: hospedes);
+        Assert.AreEqual(expected: hospedes, actual: reserva.Hospedes);
     }
 
     [TestMethod]
@@ -93,7 +93,7 @@ public class HotelTestes
         Assert.AreEqual(esperado, quantidadeHospedes, 0, "Erro ao obter quantidade de hospedes");
     }
 
-        [TestMethod]
+    [TestMethod]
     public void ObterQuantidadeHospedes_SemHospedes_DeveRetornarQuantidade()
     {
         // Preparando
@@ -102,5 +102,54 @@ public class HotelTestes
         // Assert
         int quantidadeHospedes = reserva.ObterQuantidadeHospedes();
         Assert.AreEqual(expected: 0, quantidadeHospedes, 0, "Erro ao obter quantidade de hospedes");
+    }
+
+    [TestMethod]
+    public void CalcularDiaria_SemSuite_DeveJogarExceptionSuite()
+    {
+        Reserva reserva = new(diasReservados: 5);
+        try
+        {
+            decimal valor = reserva.CalcularValorDiaria();
+        }
+        catch(Exception e)
+        {
+            StringAssert.Contains(e.Message, Reserva.SuiteNaoCadastradaMessage);
+            return;
+        }
+
+        Assert.Fail("A exception esperada não foi lançada");
+    }
+
+    [TestMethod]
+    public void CalcularDiaria_ComSuiteESemDesconto_DeveRetornarValor()
+    {
+        int quantidadeHospedes = 3;
+        List<Pessoa> hospedes = CriarListaHospedes(quantidadeHospedes);
+        Suite suite = new(tipoSuite: "Premium", capacidade: quantidadeHospedes, valorDiaria: 30);
+
+        Reserva reserva = new(diasReservados: 5);
+
+        reserva.CadastrarSuite(suite);
+        reserva.CadastrarHospedes(hospedes);
+        decimal valor = reserva.CalcularValorDiaria();
+
+        Assert.AreEqual(expected: 150.00M, actual: valor, "Cálculo de diária incorreto.");
+    }
+
+    [TestMethod]
+    public void CalcularDiaria_ComSuiteEComDesconto_DeveRetornarValorComDesconto()
+    {
+        int quantidadeHospedes = 3;
+        List<Pessoa> hospedes = CriarListaHospedes(quantidadeHospedes);
+        Suite suite = new(tipoSuite: "Premium", capacidade: quantidadeHospedes, valorDiaria: 30);
+
+        Reserva reserva = new(diasReservados: 10);
+
+        reserva.CadastrarSuite(suite);
+        reserva.CadastrarHospedes(hospedes);
+        decimal valor = reserva.CalcularValorDiaria();
+
+        Assert.AreEqual(expected: 270.00M, actual: valor, "Cálculo de diária incorreto, possivelmente não está aplicando desconto.");
     }
 }
